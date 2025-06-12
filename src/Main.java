@@ -4,15 +4,13 @@ import java.util.Scanner;
 
 public class Main {
     static ArrayList<Wycieczka> wycieczki = new ArrayList<>();
+    static ArrayList<Wycieczka> zapisane_wycieczki = new ArrayList<>();
+
     public static void main(String[] args) {
 
        for(int i = 0; i < 10; i++){
            wycieczki.add(generuj_Wycieczke());
        }
-
-        for(int i = 0; i < 10; i++){
-            wycieczki.get(i).wypisz();
-        }
 
         while(true){
             int wybor = mainMenu();
@@ -24,6 +22,7 @@ public class Main {
                 case 4: rezygnacja(); break;
                 default: return;
             }
+            wyczysc_ekran();
         }
     }
     public static Wycieczka generuj_Wycieczke(){
@@ -48,29 +47,92 @@ public class Main {
     }
 
     static int mainMenu(){
-        System.out.println("Biuro podróży 'Pikselowa Łapka'!");
+        System.out.println("Biuro podróży 'Pikselowa Przygoda'!");
         System.out.println("1. Przeglądaj dostępne wycieczki.");
         System.out.println("2. Przeglądaj wykupione wycieczki.");
         System.out.println("3. Edytuj wykupione wycieczki.");
         System.out.println("4. Zrezygnuj z wykupionej wycieczki.");
         System.out.println("5. Wyjdź.");
-        System.out.println("> ");
+        System.out.print("> ");
 
         Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
     }
 
     static void dostepne_wycieczki(){
-        System.out.println("DOSTEPNE");
+        System.out.printf("| LP. | %-20s | %-10s | %-10s | %14s | %13s |\n", "Cel podróży", "Wyjazd", "Powrót", "Cena podstawowa", "Odległość");
+
+        for(int i = 0; i < 10; i++){
+            System.out.printf("| %3d ", i+1);
+            wycieczki.get(i).wypisz();
+        }
+
+        System.out.println("Wybierz numer wycieczki, którą chcesz wykupić lub x jeśli chcesz wyjść do menu startowego.");
+        System.out.print("> ");
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            int wybor = scanner.nextInt();
+            Wycieczka wybrana_wycieczka = wycieczki.get(wybor-1);
+            zapisane_wycieczki.add(wybrana_wycieczka);
+        } catch (Exception e) {
+            return;
+        }
+
     }
     static void przegladaj_zapisane(){
-        System.out.println("przegalad");
+        Scanner scanner = new Scanner(System.in);
+        if(zapisane_wycieczki.size()==0){
+            System.out.println("Brak wykupionych wycieczek.");
+            scanner.nextLine();
+            return;
+        }
+        System.out.printf("| LP. | %-20s | %-10s | %-10s | %14s | %13s |\n", "Cel podróży", "Wyjazd", "Powrót", "Cena podstawowa", "Odległość");
+
+        for(int i = 0; i < zapisane_wycieczki.size(); i++){
+            System.out.printf("| %3d ", i+1);
+            zapisane_wycieczki.get(i).wypisz();
+        }
+
+        System.out.print("> ");
+
+
+        int wybor = scanner.nextInt();
     }
+
     static void edytuj_wycieczke(){
         System.out.println("edytuj");
     }
+
     static void rezygnacja(){
-        System.out.println("rezygnacja");
+        Scanner scanner = new Scanner(System.in);
+        if(zapisane_wycieczki.size()==0){
+            System.out.println("Brak wykupionych wycieczek.");
+            scanner.nextLine();
+            return;
+        }
+        System.out.printf("| LP. | %-20s | %-10s | %-10s | %14s | %13s |\n", "Cel podróży", "Wyjazd", "Powrót", "Cena podstawowa", "Odległość");
+
+        for(int i = 0; i < zapisane_wycieczki.size(); i++){
+            System.out.printf("| %3d ", i+1);
+            zapisane_wycieczki.get(i).wypisz();
+        }
+
+        System.out.println("Wybierz numer wycieczki z której chcesz zrezygnować lub x jeśli chcesz wyjść do menu startowego.");
+        System.out.print("> ");
+
+        try {
+            int wybor = scanner.nextInt();
+            zapisane_wycieczki.remove(wybor-1);
+        } catch (Exception e) {
+            return;
+        }
+
     }
 
+    static void wyczysc_ekran(){
+        for(int i = 0; i<50; i++){
+            System.out.println();
+        }
+    }
 }
