@@ -1,3 +1,18 @@
+/**
+ * Klasa Transport reprezentuje ogólny środek transportu, który jest bazą
+ * do tworzenia bardziej szczegółowych klas.
+ *
+ * Pola klasy:
+ * - cena_km
+ * - mnoznik_czasu.
+ *
+ * Metody klasy:
+ * - obliczanie ceny przejazdu na podstawie liczby kilometrów (obliczCene),
+ * - obliczanie czasu przejazdu (obliczCzas),
+ * - wypisywanie informacji o przejeździe (wypisz).
+ *
+ * Konstruktor domyślny ustawia oba pola (cena_km i mnoznik_czasu) na 0.
+ */
 public class Transport {
     protected double cena_km;
     protected double mnoznik_czasu;
